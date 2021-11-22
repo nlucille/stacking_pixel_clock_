@@ -1,0 +1,175 @@
+let rectX=0;
+let v=1;
+let minutes_pot=[]
+let sec_pot=[]
+let h_pot=[]
+let d_pot=[]
+
+//contructors
+class MyMinute{
+	constructor(x,y){
+		this.x=x;
+		this.y=y;
+	}
+	show(){
+	//	if (this.o==1){
+			rect(this.x, this.y, 20, height/60)
+	//	}
+	}
+}
+
+class MySec{
+	constructor(x,y){
+		this.x=x;
+		this.y=y;
+	}
+	show(){
+		rect(this.x, this.y, 10, height/60)
+	}
+}
+
+class MyHour{
+	constructor(x,y){
+		this.x=x;
+		this.y=y;
+	}
+	show(){
+		rect(this.x, this.y, 40, height/24)
+	}
+}
+
+class MyDay{
+	constructor(x,y){
+		this.x=x;
+		this.y=y;
+	}
+	show(){
+		rect(this.x, this.y, 80, height/29)
+	}
+}
+
+
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+	background(100);
+	//for (let f=60; f>=0; f-=1){
+	for (let f=0; f<60; f++){
+		let my = (height/60)*f;
+		minutes_pot[f]=new MyMinute(width*0.6, my);
+	}
+	for (let f=0; f<60; f++){
+		let sy = (height/60)*f;
+		sec_pot[f]=new MySec(width*0.8, sy);
+	}
+	for (let f=0; f<60; f++){
+		let hy = (height/24)*f;
+		h_pot[f]=new MyHour(width*0.4, hy);
+	}
+	for (let f=0; f<60; f++){
+		let dy = (height/29)*f;
+		d_pot[f]=new MyDay(width*0.2, dy);
+	}
+
+}
+
+function draw() {
+	
+		if (hour()<=8){
+		background(0)
+		fill(355)
+	}
+		if (hour()>=17){
+		background(0)
+		fill(355)
+	}
+	else{
+		background(355)
+		fill(0)
+	}
+	
+	//stroke(200, 100, 300)
+	noStroke();
+	
+	//for (let f=minutes_pot.length; f<0; f--){
+	for (let f=0; f<minutes_pot.length; f++){
+		if (f<=minute()){
+			minutes_pot[59-f].show();
+		}
+	}
+	
+	for (let f=0; f<sec_pot.length; f++){
+		if (f<=second()){
+			sec_pot[59-f].show();
+		}
+	}
+	
+	for (let f=0; f<h_pot.length; f++){
+		if (f<=hour()){
+			h_pot[23-f].show();
+		}
+	}
+	
+	for (let f=0; f<d_pot.length; f++){
+		if (f<=day()){
+			d_pot[29-f].show();
+		}
+	}
+//some variables
+	let mi = millis();
+	let mil = millis();
+	let mill = millis();
+	let mills = millis();
+	let min = minute();
+	let p=0;
+	let q=0;
+	let r=0;
+	let s=0;
+	
+
+	
+	while (mi>width){
+		mi=mi-width;
+		p=p+1;
+	}
+	let a = map(mi, 0, 1000, 0, height);
+	
+
+	let b = map(mil, 0, 59*1000, 0, height);
+	while (b>height){
+		b=b-height;
+		q=q+1;
+	}	
+
+
+	
+	let c = map(mill, 0, 59*59*1000, 0, height);	
+	
+	while (c>height){
+		c=c-height;
+		r=r+1;
+	}
+	
+	let d = map(mills, 0, 23*59*59*1000, 0, height);
+	
+	while (d>height){
+		d=d-height;
+		s=s+1;
+	}
+	
+
+
+
+		
+//drawing everything
+	rect(width*0.8, a, 10, 10)
+	rect(width*0.6, b, 20, 20)
+	rect(width*0.4, c, 40, 40)
+	rect(width*0.2, d, 80, 80)
+	textSize(80)
+	text(day(), width*0.1, d+80)
+	text(hour(), width*0.3, c+40)
+	text(minute(), width*0.5,b+20)
+	text(second(), width*0.7, a+10)
+	
+
+}
